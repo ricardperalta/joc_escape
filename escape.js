@@ -19,7 +19,18 @@ window.onload = function () {
     // Funciones
    
     /* Cambia la posición del Boton */
-   
+    function MoveOneButton(but, M, Vmb, dist) {
+        if (dist < 200) {
+            but.style.left = but.offsetLeft + Vmb.x * 1000 / (dist**2); 
+            but.style.top = but.offsetTop + Vmb.y * 1000/ (dist**2);
+            if (but.offsetLeft < 0) but.style.left = 50;
+            else if (but.offsetLeft > 500) but.style.left = 450;
+            if (but.offsetTop < 0) but.style.top = 50;
+            else if (but.offsetTop > 500) but.style.top = 450;
+        }
+    }
+
+    // Move all the buttons, escaping from mouse position.
     function MoveAllButtons(e){
         let M, B, Vmb, dist;
 
@@ -35,15 +46,9 @@ window.onload = function () {
                 // create vector from M to B.
                 Vmb = M.crearVect(B);
                 dist = Vmb.dist();
-                if (dist < 200) {
-                    but.style.left = but.offsetLeft + Vmb.x * 1000 / (dist**2); 
-                    but.style.top = but.offsetTop + Vmb.y * 1000/ (dist**2);
-                    if (but.offsetLeft < 0) but.style.left = 50;
-                    else if (but.offsetLeft > 500) but.style.left = 450;
-                    if (but.offsetTop < 0) but.style.top = 50;
-                    else if (but.offsetTop > 500) but.style.top = 450;
-                }
+                MoveOneButton(but, M, Vmb, dist);
             });
+            
             // test if some button is inside
             let center = new Point(250, 250);
             let radi = 25;
